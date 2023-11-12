@@ -1,23 +1,11 @@
-import 'dotenv/config'
-import { ModulesRoute } from './routes/modules.route'
-import { LyricsRoute } from './routes/lyrics.route'
-import { HomeRoute } from './routes/home.route'
-import { PlaylistsRoute } from './routes/playlists.route'
-import { AlbumsRoute } from './routes/albums.route'
-import { SongsRoute } from './routes/songs.route'
+import { SearchRoute } from '@modules/search/routes'
+import { serve } from '@hono/node-server'
 import { App } from './app'
-import { SearchRoute } from './routes/search.route'
-import { ArtistsRoute } from './routes/artists.route'
+require('module-alias/register')
 
-const app = new App([
-  new HomeRoute(),
-  new SearchRoute(),
-  new SongsRoute(),
-  new AlbumsRoute(),
-  new ArtistsRoute(),
-  new PlaylistsRoute(),
-  new LyricsRoute(),
-  new ModulesRoute(),
-])
+const app = new App([new SearchRoute()])
 
-app.listen()
+serve({
+  fetch: app.getApp().fetch,
+  port: 3000,
+})

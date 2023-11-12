@@ -10,18 +10,25 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "module": "commonjs",
+    "noImplicitAny": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "pretty": true,
     "sourceMap": false,
+    "strictNullChecks": true,
     "declaration": true,
-    "outDir": "./public",
+    "outDir": "./dist",
     "allowJs": true,
     "noEmit": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "importHelpers": true,
-    "baseUrl": "src"
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["src/common/*"],
+      "@modules/*": ["src/modules/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.json", ".env"],
   "exclude": ["node_modules"]
