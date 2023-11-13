@@ -15,7 +15,7 @@ export class SearchController {
 
       const result = await this.searchService.searchAll(query)
 
-      return ctx.json({ status: 'success', message: null, data: result })
+      return ctx.json({ success: true, message: null, data: result })
     } catch (error) {
       throw new HTTPException(400, { message: error as string })
     }

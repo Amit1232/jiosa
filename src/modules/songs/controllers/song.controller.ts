@@ -1,5 +1,6 @@
 import { HTTPException } from 'hono/http-exception'
 import { SongService } from '@modules/songs/services'
+import type { SongResponse } from '@modules/songs/types'
 import type { Context } from 'hono'
 
 export class SongController {
@@ -9,19 +10,19 @@ export class SongController {
     this.songsService = new SongService()
   }
 
-  public songDetails = async (ctx: Context) => {
+  public getSong = async (ctx: Context) => {
     try {
-      const { id, link } = ctx.req.query()
+      const { id, link } = ctx.req.valid('query' as never)
 
-      let result = []
+      let result: SongResponse[] = []
 
       if (id) {
-        result = await this.songsService.getSongById(id)
+        result = await this.songsService.getSongByIds(id)
       } else if (link) {
         result = await this.songsService.getSongByLink(link)
       }
 
-      return ctx.json({ status: globalConstants.status.success, message: null, data: result })
+      return ctx.json({ success: true, message: null, data: result })
     } catch (error) {
       throw new HTTPException(400, { message: error as string })
     }

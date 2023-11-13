@@ -1,11 +1,25 @@
-import { useFetch } from '@common/helpers'
+import { SearchAllUseCase } from '@modules/search/use-cases'
 
 export class SearchService {
-  constructor() {}
+  private readonly searchAllUseCase: SearchAllUseCase
+
+  constructor() {
+    this.searchAllUseCase = new SearchAllUseCase()
+  }
 
   searchAll = async (query: string) => {
-    const response = await useFetch('searchAll', { query, __call: 'autocomplete.get' })
+    return this.searchAllUseCase.execute(query)
+  }
 
-    return response.json()
+  searchSongs = async (query: string) => {
+    return this.searchAllUseCase.execute(query)
+  }
+
+  searchAlbums = async (query: string) => {
+    return this.searchAllUseCase.execute(query)
+  }
+
+  searchArtists = async (query: string) => {
+    return this.searchAllUseCase.execute(query)
   }
 }

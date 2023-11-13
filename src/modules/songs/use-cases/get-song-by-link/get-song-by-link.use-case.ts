@@ -5,11 +5,14 @@ import { HTTPException } from 'hono/http-exception'
 import type { SongAPIResponse, SongResponse } from '@modules/songs/types'
 import type { IUseCase } from '@common/types'
 
-export class GetSongByIdUseCase implements IUseCase<String, SongResponse[]> {
+export class GetSongByLinkUseCase implements IUseCase<String, SongResponse[]> {
   constructor() {}
 
-  async execute(songIds: string) {
-    const response = await useFetch<{ songs: SongAPIResponse[] }>(Endpoints.songs.id, { pids: songIds })
+  async execute(songLink: string) {
+    const response = await useFetch<{ songs: SongAPIResponse[] }>(Endpoints.songs.link, {
+      token: songLink,
+      type: 'song',
+    })
 
     if (!response.songs || response?.songs?.length === 0) throw new HTTPException(400, { message: 'song not found' })
 
